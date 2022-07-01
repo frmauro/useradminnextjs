@@ -5,23 +5,29 @@ import useAuth from "../data/hook/useAuth";
 
 export default function Autenticacao() {
 
-    const {usuario, login} = useAuth()
+    const { createAccount, login } = useAuth()
 
     const [erro, setErro] = useState(null)
     const [modo, setModo] = useState<'login' | 'cadastro'>('login')
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
 
-    function exibirErro(msg, tempoEmSegundos = 5){
+    function exibirErro(msg, tempoEmSegundos = 5) {
         setErro(msg)
         setTimeout(() => setErro(null), tempoEmSegundos * 1000)
     }
 
-    function submeter() {
-        if (modo === 'login') {
-            console.log('login')
-        } else {
-            console.log('cadastrar')
+    async function submeter() {
+        try {
+            if (modo === 'login') {
+                //console.log('login')
+                await login(email, senha)
+            } else {
+                //console.log('cadastrar')
+                await createAccount(email, senha)
+            }
+        } catch (error) {
+            exibirErro(error?.message ?? 'Erro desconhecido!')
         }
     }
 

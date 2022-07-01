@@ -6,7 +6,8 @@ import Cookies from 'js-cookie'
 interface AuthContextProps {
     usuario?: Usuario
     carregando?: boolean
-    login?: () => Promise<void>
+    login?: (email: string, password: string) => Promise<void>
+    createAccount?: (email: string, password: string) => Promise<void>
     logout?: () => Promise<void>
 }
 
@@ -50,7 +51,20 @@ export function AuthProvider(props) {
         }
     }
 
-    function login() {
+    function createAccount(email, password) {
+
+        try {
+            // ******** aqui faz a requisição para a api de usuario *******
+            setCarregando(true)
+            const usuario = usuarioNormalizado()
+            configuraSessao(usuario)
+            route.push('/')
+        } finally {
+            setCarregando(false)
+        }
+    }
+
+    function login(email, password) {
 
         try {
             // ******** aqui faz a requisição para a api de usuario *******
@@ -84,6 +98,7 @@ export function AuthProvider(props) {
         <AuthContext.Provider value={{
             usuario,
             carregando,
+            createAccount,
             login,
             logout
         }} >
