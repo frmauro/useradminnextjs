@@ -1,6 +1,7 @@
 import route from 'next/router'
 import { createContext, useEffect, useState } from "react";
 import Usuario from "../../model/Usuario";
+import UserService from '../../services/userService';
 import Cookies from 'js-cookie'
 
 interface AuthContextProps {
@@ -64,11 +65,16 @@ export function AuthProvider(props) {
         }
     }
 
-    function login(email, password) {
+    async function login(email, password) {
 
         try {
             // ******** aqui faz a requisição para a api de usuario *******
-            //console.log('login')
+            let users = await UserService.getUserServiceInstance()
+                .getUsers()
+                .then(items => {
+                    console.log(items)
+                });
+
             setCarregando(true)
             const usuario = usuarioNormalizado()
             console.log(usuario)
