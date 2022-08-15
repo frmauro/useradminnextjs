@@ -68,8 +68,11 @@ export function AuthProvider(props) {
 
         try {
             // ******** aqui faz a requisição para a api de usuario *******
+            //console.log('login')
             setCarregando(true)
             const usuario = usuarioNormalizado()
+            console.log(usuario)
+            setUsuario(usuario)
             configuraSessao(usuario)
             route.push('/')
         } finally {

@@ -18,6 +18,7 @@ export default function Autenticacao() {
     }
 
     async function submeter() {
+        //console.log('submeter')
         try {
             if (modo === 'login') {
                 //console.log('login')
@@ -66,7 +67,7 @@ export default function Autenticacao() {
                     valorMudou={setSenha}
                     obrigatorio
                 />
-                <button onClick={login} className={`
+                <button onClick={submeter} className={`
                 w-full bg-indigo-500 hover:bg-indigo-400 text-white rounded-lg px-4 py-3 mt-6
             `}>
                     {modo === 'login' ? 'Entrar' : 'Cadastrar'}
