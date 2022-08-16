@@ -81,7 +81,7 @@ export function AuthProvider(props) {
                     //console.log(usuario)
                     setUsuario(usuario)
                     configuraSessao(usuario)
-                    route.push('/')
+                    route.push('/users')
                 });
 
         } finally {
