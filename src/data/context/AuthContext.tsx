@@ -14,13 +14,13 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({})
 
-function usuarioNormalizado(): Usuario {
-    return {
-        id: "123456778",
-        email: "frmauro8@gmail.com",
-        name: "Francisco",
-        token: "653466757867tyetyrety",
-        password: "123",
+function usuarioNormalizado(userVm: any): Usuario {
+    return     {
+        id: userVm.id === '' ? "123456778" : userVm.id,
+        email: userVm.email === '' ? "frmauro8@gmail.com" : userVm.email,
+        name: userVm.name === '' ? "Francisco" : userVm.name,
+        token: userVm.token === '' ? "99999999999" : userVm.token,
+        password: userVm.password === '' ? "123" : userVm.password,
         urlImage: "#"
     }
 }
@@ -40,7 +40,8 @@ export function AuthProvider(props) {
     const [usuario, setUsuario] = useState<Usuario>(null)
 
     function configuraSessao(user) {
-        const usuario = usuarioNormalizado()
+        let userVm = { id: '', email: user.email, name: '', token: '', password: user.password, urlImage: '' };
+        const usuario = usuarioNormalizado(userVm)
         if (user.email) {
             gerenciarCookie(true)
             setCarregando(false)
@@ -57,7 +58,8 @@ export function AuthProvider(props) {
         try {
             // ******** aqui faz a requisição para a api de usuario *******
             setCarregando(true)
-            const usuario = usuarioNormalizado()
+            let userVm = { id: '', email: email, name: '', token: '', password: password, urlImage: '' };
+            const usuario = usuarioNormalizado(userVm)
             configuraSessao(usuario)
             route.push('/')
         } finally {
@@ -69,18 +71,19 @@ export function AuthProvider(props) {
 
         try {
             // ******** aqui faz a requisição para a api de usuario *******
-            let users = await UserService.getUserServiceInstance()
-                .getUsers()
-                .then(items => {
-                    console.log(items)
+            let userVm = { email: email, password: password };
+            let response = await UserService.getUserServiceInstance()
+                .findUserByEmailAndPassword(userVm)
+                .then(resUser => {
+                    console.log(resUser)
+                    setCarregando(true)
+                    const usuario = usuarioNormalizado(resUser)
+                    //console.log(usuario)
+                    setUsuario(usuario)
+                    configuraSessao(usuario)
+                    route.push('/')
                 });
 
-            setCarregando(true)
-            const usuario = usuarioNormalizado()
-            console.log(usuario)
-            setUsuario(usuario)
-            configuraSessao(usuario)
-            route.push('/')
         } finally {
             setCarregando(false)
         }

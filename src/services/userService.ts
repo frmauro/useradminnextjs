@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Usuario from '../model/Usuario'
 
 const baseURL  = "http://localhost:5000";
 
@@ -20,6 +21,22 @@ class UserService {
     async getUsers(){
         const response = await api.get('users');
         return response.data;
+    }
+
+    async findUserByEmailAndPassword(user: Usuario){
+        const options = {
+            headers: {'Content-Type': 'application/json'}
+        }
+        //console.log(user);
+        return await api.post('FindUserByEmailAndPassword', user, options)
+        .then((response) => {
+            let res = response;
+            //console.log(res.data);
+            return res.data;
+        })
+        .catch((err) => {
+            console.error("ops! ocorreu um erro" + err);
+        });
     }
 
     // async getUserById(id){
