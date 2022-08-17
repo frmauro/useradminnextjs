@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Botao from '../components/template/botao';
+import Formulario from '../components/template/Formulario';
 import Layout from '../components/template/Layout' 
 import Tabela from '../components/template/Tabela';
+import ConcreteUser from '../model/ConcreteModel/ConcreteUser';
 import Usuario from '../model/Usuario';
 
 import UserService from '../services/userService'
@@ -9,6 +11,8 @@ import UserService from '../services/userService'
 
 export default function Users(){
     const [users, setUsers] = useState([]);
+    const [visible, setVisible] = useState<'table' | 'form'>('table')
+    const [user, setUser] = useState<Usuario>(ConcreteUser.empty())
 
 
     useEffect(() => {
@@ -26,11 +30,23 @@ export default function Users(){
     }, [])
 
     function SelectedUser(user: Usuario){
-        console.log(user.name)
+        setUser(user)
+        setVisible('form')
+        //console.log(user.name)
     }
 
     function DelectedUser(user: Usuario){
-        console.log(`Excluir... ${user.name}`)
+        //console.log(`Excluir... ${user.name}`)
+    }
+
+    function newUser(){
+        setUser(ConcreteUser.empty())
+        setVisible('form')
+    }
+
+    function SalvarUser(user: Usuario){
+        //console.log(user)
+        setVisible('table')
     }
 
     return(
@@ -40,10 +56,17 @@ export default function Users(){
                 
         `} >
             <Layout titulo="Página de usuários" subtitulo="Página de usuários">
-                <div className="flex justify-end">
-                    <Botao cor="green" className="mb-4">New User</Botao>
-                </div>
-                <Tabela users={users} userSelected={SelectedUser} userDelected={DelectedUser}></Tabela>
+                {visible === 'table' ? (
+                    <>
+                        <div className="flex justify-end">
+                            <Botao onClick={newUser} cor="green" className="mb-4">New User</Botao>
+                        </div>
+                        <Tabela users={users} userSelected={SelectedUser} userDelected={DelectedUser}></Tabela>
+                    </>
+
+                ) : (
+                    <Formulario onUserChanged={SalvarUser} onCanceled={() => setVisible('table')} user={user} ></Formulario>
+                )}
             </Layout>
        </div>
     )

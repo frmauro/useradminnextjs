@@ -16,6 +16,8 @@ export default function Tabela(props: TabelaProps){
                 <th className="text-left p-4">ID</th>
                 <th className="text-left p-4">Name</th>
                 <th className="text-left p-4">Email</th>
+                <th className="text-left p-4">UserType</th>
+                <th className="text-left p-4">Status</th>
                 { viewActions ? <th className="p-4">Actions</th> : false}
             </tr>
         )
@@ -30,6 +32,8 @@ export default function Tabela(props: TabelaProps){
                         <td className="text-left p-2">{user.id}</td>
                         <td className="text-left p-2">{user.name}</td>
                         <td className="text-left p-2">{user.email}</td>
+                        <td className="text-left p-2">{user.userType}</td>
+                        <td className="text-left p-2">{user.status}</td>
                         {viewActions ? renderizarAcoes(user) : false}
                     </tr>
                 )

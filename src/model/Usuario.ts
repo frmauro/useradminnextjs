@@ -4,5 +4,6 @@ export default interface Usuario{
     name: string
     token: string
     password: string
-    urlImage: string
+    userType: string
+    status: string
 }
