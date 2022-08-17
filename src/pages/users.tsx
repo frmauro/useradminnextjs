@@ -45,7 +45,9 @@ export default function Users(){
     }
 
     function SalvarUser(user: Usuario){
-        //console.log(user)
+        console.log(user)
+        // let response = UserService.getUserServiceInstance().insertUser(user)
+        // console.log(response)
         setVisible('table')
     }
 

@@ -49,21 +49,21 @@ class UserService {
     // }
 
 
-    // insertUser(vm){
+    insertUser(user: Usuario){
 
-    //     const options = {
-    //         headers: {'Content-Type': 'application/json'}
-    //       };
+        const options = {
+            headers: {'Content-Type': 'application/json'}
+          };
 
-    //     return api.post(`CreateUser`, vm, options)
-    //      .then((response) => {
-    //         let res = response;
-    //         return res.statusText;
-    //       })
-    //       .catch((err) => {
-    //         console.error("ops! ocorreu um erro" + err);
-    //       });
-    // }
+        return api.post(`CreateUser`, user, options)
+         .then((response) => {
+            let res = response;
+            return res.statusText;
+          })
+          .catch((err) => {
+            console.error("ops! ocorreu um erro" + err);
+          });
+    }
 
     // updateUser(vm){
 
