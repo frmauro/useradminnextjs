@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Botao from '../components/template/botao';
 import Layout from '../components/template/Layout' 
 import Tabela from '../components/template/Tabela';
 import Usuario from '../model/Usuario';
@@ -39,6 +40,9 @@ export default function Users(){
                 
         `} >
             <Layout titulo="Página de usuários" subtitulo="Página de usuários">
+                <div className="flex justify-end">
+                    <Botao cor="green" className="mb-4">New User</Botao>
+                </div>
                 <Tabela users={users} userSelected={SelectedUser} userDelected={DelectedUser}></Tabela>
             </Layout>
        </div>
