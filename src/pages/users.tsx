@@ -15,19 +15,19 @@ export default function Users(){
     const [user, setUser] = useState<Usuario>(ConcreteUser.empty())
 
 
-    useEffect(() => {
+    useEffect(getUsers, [])
 
-            async function getUsers(){
-                await UserService.getUserServiceInstance()
-                .getUsers()
-                .then(users => {
-                    setUsers(users);
-                });
-            }
+            function getUsers(){
+                UserService.getUserServiceInstance()
+            .getUsers()
+            .then(users => {
+                setUsers(users);
+                setVisible('table')
+            });
+        }
 
-            getUsers();
 
-    }, [])
+    
 
     function SelectedUser(user: Usuario){
         setUser(user)
@@ -48,7 +48,8 @@ export default function Users(){
         //console.log(user)
         let response = UserService.getUserServiceInstance().insertUser(user)
         //console.log(response)
-        setVisible('table')
+        getUsers()
+        //setVisible('table')
     }
 
     return(
