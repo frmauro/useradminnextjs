@@ -56,7 +56,7 @@ export default function Formulario(props: FormularioProps){
                 </select>
             </div>
             <div className="flex justify-end mt-7">
-                <Botao cor="blue" className="mr-2" onClick={() => props.onUserChanged?.(new ConcreteUser(email, name, '', password, userType, status, id))} >
+                <Botao cor="blue" className="mr-2" onClick={() => props.onUserChanged?.(new ConcreteUser(email, name, token, password, userType, status, id))} >
                     {id ? 'Update' : 'Insert'}
                 </Botao>
                 <Botao onClick={props.onCanceled} cor="gray" className="mr-2">

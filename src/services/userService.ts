@@ -55,7 +55,17 @@ class UserService {
             headers: {'Content-Type': 'application/json'}
           };
 
-        return api.post(`CreateUser`, user, options)
+          console.log(user);
+          let vm = JSON.stringify({
+              name: user.name,
+              password: user.password,
+              email: user.email,
+              status: user.status,
+              userType: user.userType
+          });
+          console.log(vm);
+
+        return api.post(`CreateUser`, vm, options)
          .then((response) => {
             let res = response;
             return res.statusText;
