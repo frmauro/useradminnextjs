@@ -75,22 +75,32 @@ class UserService {
           });
     }
 
-    // updateUser(vm){
+    updateUser(user: Usuario){
 
-    //         const options = {
-    //             headers: {'Content-Type': 'application/json'}
-    //           };
+            const options = {
+                headers: {'Content-Type': 'application/json'}
+              };
+
+              const vm = JSON.stringify({
+                id: user.id,
+                name: user.name,
+                password: user.password,
+                token: user.token,
+                email: user.email,
+                status: user.status,
+                userType: user.userType
+              });
     
-    //         return api.put(`UpdateUser`, vm, options)
-    //          .then((response) => {
-    //             let res = response;
-    //             return res.statusText;
-    //           })
-    //           .catch((err) => {
-    //             console.error("ops! ocorreu um erro" + err);
-    //           });
+            return api.put(`UpdateUser`, vm, options)
+             .then((response) => {
+                let res = response;
+                return res.statusText;
+              })
+              .catch((err) => {
+                console.error("ops! ocorreu um erro" + err);
+              });
 
-    //   }
+      }
 
 
 }

@@ -44,12 +44,16 @@ export default function Users(){
         setVisible('form')
     }
 
-    function SalvarUser(user: Usuario){
+    async function SalvarUser(user: Usuario){
+        let response = ''
         //console.log(user)
-        let response = UserService.getUserServiceInstance().insertUser(user)
+        if (user.id === null){
+            response = await UserService.getUserServiceInstance().insertUser(user)
+        }else{
+            response = await UserService.getUserServiceInstance().updateUser(user)
+        }
         //console.log(response)
         getUsers()
-        //setVisible('table')
     }
 
     return(
