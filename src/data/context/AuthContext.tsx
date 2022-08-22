@@ -59,7 +59,7 @@ export function AuthProvider(props) {
         }
     }
 
-    function createAccount(email, password) {
+    async function createAccount(email, password) {
 
         try {
             // ******** aqui faz a requisição para a api de usuario *******
