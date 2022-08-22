@@ -1,7 +1,9 @@
 import axios from 'axios';
 import Usuario from '../model/Usuario'
+import configData from '../config.json'
 
-const baseURL  = "http://localhost:5000";
+//const baseURL  = "http://localhost:5000";
+const baseURL = configData.baseURL;
 
 const api = axios.create({
     baseURL: baseURL
@@ -27,12 +29,12 @@ class UserService {
         const options = {
             headers: {'Content-Type': 'application/json'}
         }
-        console.log('findUserByEmailAndPassword 01');
-        console.log(user);
+        //console.log('findUserByEmailAndPassword 01');
+        //console.log(user);
         return await api.post('FindUserByEmailAndPassword', user, options)
         .then((response) => {
             let res = response;
-            console.log('findUserByEmailAndPassword 02');
+            //console.log('findUserByEmailAndPassword 02');
             //console.log(res.data);
             return res.data;
         })
