@@ -28,6 +28,7 @@ export default function Autenticacao() {
                 await createAccount(email, senha)
             }
         } catch (error) {
+            //console.log(error)
             exibirErro(error?.message ?? 'Erro desconhecido!')
         }
     }

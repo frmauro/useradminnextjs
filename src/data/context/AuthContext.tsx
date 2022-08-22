@@ -15,13 +15,15 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({})
 
 function usuarioNormalizado(userVm: any): Usuario {
+    //console.log(userVm)
     return     {
         id: userVm.id === '' ? "123456778" : userVm.id,
         email: userVm.email === '' ? "frmauro8@gmail.com" : userVm.email,
         name: userVm.name === '' ? "Francisco" : userVm.name,
         token: userVm.token === '' ? "99999999999" : userVm.token,
         password: userVm.password === '' ? "123" : userVm.password,
-        urlImage: "#"
+        status: userVm.status === '' ? 'active' : userVm.status,
+        userType: userVm.userType === '' ? 'client' : userVm.userType,
     }
 }
 
@@ -39,13 +41,17 @@ export function AuthProvider(props) {
     const [carregando, setCarregando] = useState(true)
     const [usuario, setUsuario] = useState<Usuario>(null)
 
-    function configuraSessao(user) {
-        let userVm = { id: '', email: user.email, name: '', token: '', password: user.password, urlImage: '' };
-        const usuario = usuarioNormalizado(userVm)
-        if (user.email) {
-            gerenciarCookie(true)
-            setCarregando(false)
-            return usuario.email
+    function configuraSessao(user: Usuario) {
+        //let userVm = { id: '', email: user.email, name: '', token: '', password: user.password, urlImage: '' };
+        //const usuario = usuarioNormalizado(userVm)
+        console.log(user)
+        if (user != null) {
+            if (user.email){
+                gerenciarCookie(true)
+                setCarregando(false)
+                setUsuario(user)
+                return user.email
+            }
         } else {
             gerenciarCookie(false)
             setCarregando(true)
@@ -70,16 +76,18 @@ export function AuthProvider(props) {
     async function login(email, password) {
 
         try {
-            // ******** aqui faz a requisição para a api de usuario *******
             let userVm = { email: email, password: password };
+            //console.log(userVm)
             let response = await UserService.getUserServiceInstance()
                 .findUserByEmailAndPassword(userVm)
                 .then(resUser => {
-                    console.log(resUser)
+                    //console.log(`antes do incremento do email ${resUser.email}`)
+                    resUser.email = email;
+                    //console.log(`depois do incremento do email ${resUser.email}`)
                     setCarregando(true)
                     const usuario = usuarioNormalizado(resUser)
                     //console.log(usuario)
-                    setUsuario(usuario)
+                    //setUsuario(usuario)
                     configuraSessao(usuario)
                     route.push('/users')
                 });
@@ -89,11 +97,11 @@ export function AuthProvider(props) {
         }
     }
 
-    function logout() {
+    async function logout() {
         try {
             setCarregando(true)
-            configuraSessao(null)
-        } catch (error) {
+            await configuraSessao(null)
+        } finally {
             setCarregando(false)
         }
     }
