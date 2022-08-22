@@ -26,7 +26,7 @@ else
 echo "No such container"
 fi
 
-# cp -a /home/francisco/estudos/azuredevops/myagent/_work/17/s/.  /home/francisco/estudos/azuredevops/myagent/_work/r18/a/
+ cp -a /home/francisco/estudos/azuredevops/myagent/_work/17/s/.  /home/francisco/estudos/azuredevops/myagent/_work/r16/a/
 
 docker build -t salesusernextjs .
 
